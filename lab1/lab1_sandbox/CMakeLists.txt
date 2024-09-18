@@ -4,5 +4,5 @@ project(lab1 C)
 set(CMAKE_C_STANDARD 17)
 
 add_executable(lab1 main.c
-        state_machine.c
-        state_machine.h)
+        states.h
+        constants.h)
