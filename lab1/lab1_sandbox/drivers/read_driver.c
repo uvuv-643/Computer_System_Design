@@ -1,3 +1,10 @@
-int read_button_state(void) {
-    return 1;
+#include <stdlib.h>
+#include <time.h>
+// GPIO_PinState read_button_state() {
+int read_button_state() {
+    // GPIO_PinState pin_info = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15);
+
+    srand(time(NULL));
+    return rand();
+    // return pin_info;
 }
