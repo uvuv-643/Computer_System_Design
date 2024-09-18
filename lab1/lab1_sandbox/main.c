@@ -75,7 +75,7 @@ int get_time_of_color(enum LightState current_state) {
 }
 
 int ready_to_switch() {
-    return button_tick > get_time_of_color(state);
+    return (tick - button_tick) > get_time_of_color(state);
 }
 
 void switch_to_button_with_timer_flush(enum LightState new_state) {
