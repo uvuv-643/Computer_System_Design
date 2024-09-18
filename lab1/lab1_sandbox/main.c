@@ -5,7 +5,6 @@
 #include "drivers/read_driver.h"
 
 
-
 /*
 
  FINITE STATE MACHINE FOR TRAFFIC LIGHT ON STM32
@@ -89,7 +88,6 @@ void switch_to_button(enum LightState new_state) {
 }
 
 int main() {
-
     while (1) {
         Sleep(10);
         write_color(GREEN_FLUSHING_STM32);
@@ -127,5 +125,4 @@ int main() {
     }
 
     return 0;
-
 }
