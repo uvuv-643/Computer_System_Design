@@ -5,4 +5,8 @@ set(CMAKE_C_STANDARD 17)
 
 add_executable(lab1 main.c
         states.h
-        constants.h)
+        constants.h
+        drivers/read_driver.h
+        drivers/read_driver.c
+        drivers/write_driver.c
+        drivers/write_driver.h)
