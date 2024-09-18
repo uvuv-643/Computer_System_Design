@@ -15,19 +15,19 @@ void write_color(const enum Color color) {
     // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET);
 
     switch (color) {
-        case RED:
+        case RED_STM32:
             printf("R");
         // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET);
             break;
-        case GREEN:
+        case GREEN_STM32:
             printf("G");
         // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
             break;
-        case YELLOW:
+        case YELLOW_STM32:
             printf("Y");
         // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
             break;
-        case GREEN_FLUSHING:
+        case GREEN_FLUSHING_STM32:
             if ((tick / 50) % 2 == 0) {
                 printf("G");
                 // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
