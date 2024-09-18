@@ -2,8 +2,9 @@
 #include "constants.h"
 #include "drivers/write_driver.h"
 #include <Windows.h>
+#include "drivers/read_driver.h"
 
-int main(void) {
+
 
 /*
 
@@ -87,16 +88,16 @@ void switch_to_button(enum LightState new_state) {
     state = new_state;
 }
 
-int main(void)
-{
+int main() {
 
->>>>>>> d154b69 (feat: added state machine)
     while (1) {
+        Sleep(10);
+        write_color(GREEN_FLUSHING_STM32);
         tick += 1;
         switch (state) {
             case GREEN:
                 if (read_button() == 1) switch_to_button(GREEN_SHORT);
-                else if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN_FLUSHING_SHORT)
+                else if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN_FLUSHING_SHORT);
                 break;
             case GREEN_FLUSHING:
                 if (read_button() == 1) switch_to_button(GREEN_FLUSHING_SHORT);

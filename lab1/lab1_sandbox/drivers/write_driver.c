@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int tick = 0;
+int write_tick = 0;
 
 void write_color(const enum Color color) {
-    tick += 1;
+    write_tick += 1;
 
     system("cls");
 
@@ -28,7 +28,7 @@ void write_color(const enum Color color) {
         // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
             break;
         case GREEN_FLUSHING_STM32:
-            if ((tick / 50) % 2 == 0) {
+            if ((write_tick / 50) % 2 == 0) {
                 printf("G");
                 // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
             } else {
