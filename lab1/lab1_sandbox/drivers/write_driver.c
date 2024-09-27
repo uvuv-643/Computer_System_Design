@@ -3,38 +3,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int write_tick = 0;
+void write_color(const enum LightState color) {
 
-void write_color(const enum Color color) {
-    write_tick += 1;
-
-    system("cls");
-
-    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
-    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_RESET);
-    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET);
 
     switch (color) {
-        case RED_STM32:
-            printf("R");
-        // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET);
-            break;
-        case GREEN_STM32:
-            printf("G");
-        // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
-            break;
-        case YELLOW_STM32:
-            printf("Y");
-        // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
-            break;
-        case GREEN_FLUSHING_STM32:
-            if ((write_tick / 50) % 2 == 0) {
-                printf("G");
-                // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
+        case RED:
+        case RED_SHORT:
+            HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
+        break;
+        case GREEN:
+        case GREEN_SHORT:
+            HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
+        break;
+        case YELLOW:
+        case YELLOW_SHORT:
+            HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET);
+        break;
+        case GREEN_FLUSHING:
+        case GREEN_FLUSHING_SHORT:
+            if ((HAL_GetTick() / 300) % 2 == 0) {
+                HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
             } else {
-                printf("X");
-                // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
+                HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
             }
-            break;
+        break;
     }
 }

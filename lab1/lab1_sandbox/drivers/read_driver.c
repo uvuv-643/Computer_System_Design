@@ -1,10 +1,6 @@
-#include <stdlib.h>
-#include <time.h>
-// GPIO_PinState read_button_state() {
-int read_button() {
-    // GPIO_PinState pin_info = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15);
+#include "read_driver.h"
 
-    srand(time(NULL));
-    return rand();
-    // return pin_info;
+int read_button() {
+    GPIO_PinState pin_info = !HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15);
+    return pin_info;
 }
