@@ -1462,3 +1462,8 @@ java.net.NoRouteToHostException: No route to host: connect
 
 
 2024-09-18 12:18:43,735 [INFO] Activator:178 - !SESSION log4j initialized
+2024-09-18 12:18:49,313 [ERROR] AnalyticsContext:980 - The ST intranet updater server is unknown: mcucrossselector.codex.cro.st.com
+2024-09-27 12:51:01,697 [INFO] Activator:177 - 
+
+
+2024-09-27 12:51:01,698 [INFO] Activator:178 - !SESSION log4j initialized
