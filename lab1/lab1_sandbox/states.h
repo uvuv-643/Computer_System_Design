@@ -1,11 +1,16 @@
 #ifndef STATE_H
 #define STATE_H
 
-enum state {
-    RED,
+enum LightState {
     GREEN,
-    FLASHING_GREEN,
-    YELLOW
+    YELLOW,
+    RED,
+    GREEN_FLUSHING,
+    GREEN_SHORT,
+    YELLOW_SHORT,
+    RED_SHORT,
+    GREEN_FLUSHING_SHORT
 };
+
 
 #endif //STATE_H

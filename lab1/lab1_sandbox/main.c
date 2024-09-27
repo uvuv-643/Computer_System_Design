@@ -1,8 +1,8 @@
-#include <stdio.h>
+#include <stdint.h>
 #include "constants.h"
 #include "drivers/write_driver.h"
-#include <Windows.h>
 #include "drivers/read_driver.h"
+#include "states.h"
 
 
 /*
@@ -38,17 +38,6 @@
        +------+            +------+
 
  */
-
-enum LightState {
-    GREEN,
-    YELLOW,
-    RED,
-    GREEN_FLUSHING,
-    GREEN_SHORT,
-    YELLOW_SHORT,
-    RED_SHORT,
-    GREEN_FLUSHING_SHORT
-};
 
 
 enum LightState state = GREEN;
@@ -88,39 +77,55 @@ void switch_to_button(enum LightState new_state) {
 }
 
 int main() {
+    uint8_t flag_key_press = 1;
+    uint32_t time_key_press = 0;
+
     while (1) {
-        Sleep(10);
-        write_color(GREEN_FLUSHING_STM32);
-        tick += 1;
-        switch (state) {
-            case GREEN:
-                if (read_button() == 1) switch_to_button(GREEN_SHORT);
-                else if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN_FLUSHING_SHORT);
-                break;
-            case GREEN_FLUSHING:
-                if (read_button() == 1) switch_to_button(GREEN_FLUSHING_SHORT);
-                else if (ready_to_switch()) switch_to_button_with_timer_flush(RED);
-                break;
-            case RED:
-                if (read_button() == 1) switch_to_button(RED_SHORT);
-                else if (ready_to_switch()) switch_to_button_with_timer_flush(YELLOW);
-                break;
-            case YELLOW:
-                if (read_button() == 1) switch_to_button(YELLOW_SHORT);
-                else if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN);
-                break;
-            case GREEN_SHORT:
-                if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN_FLUSHING_SHORT);
-                break;
-            case GREEN_FLUSHING_SHORT:
-                if (ready_to_switch()) switch_to_button_with_timer_flush(RED_SHORT);
-                break;
-            case RED_SHORT:
-                if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN);
-                break;
-            case YELLOW_SHORT:
-                if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN_SHORT);
-                break;
+        GPIO_PinState pin_info = read_button();
+
+        if (pin_info == GPIO_PIN_RESET && flag_key_press) {
+            flag_key_press = 0;
+
+            write_color(GREEN_FLUSHING_STM32);
+
+            tick += 1;
+
+            switch (state) {
+                case GREEN:
+                    if (read_button() == 1) switch_to_button(GREEN_SHORT);
+                    else if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN_FLUSHING_SHORT);
+                    break;
+                case GREEN_FLUSHING:
+                    if (read_button() == 1) switch_to_button(GREEN_FLUSHING_SHORT);
+                    else if (ready_to_switch()) switch_to_button_with_timer_flush(RED);
+                    break;
+                case RED:
+                    if (read_button() == 1) switch_to_button(RED_SHORT);
+                    else if (ready_to_switch()) switch_to_button_with_timer_flush(YELLOW);
+                    break;
+                case YELLOW:
+                    if (read_button() == 1) switch_to_button(YELLOW_SHORT);
+                    else if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN);
+                    break;
+                case GREEN_SHORT:
+                    if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN_FLUSHING_SHORT);
+                    break;
+                case GREEN_FLUSHING_SHORT:
+                    if (ready_to_switch()) switch_to_button_with_timer_flush(RED_SHORT);
+                    break;
+                case RED_SHORT:
+                    if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN);
+                    break;
+                case YELLOW_SHORT:
+                    if (ready_to_switch()) switch_to_button_with_timer_flush(GREEN_SHORT);
+                    break;
+            }
+
+            time_key_press = HAL_GetTick();
+        }
+
+        if (!flag_key_press && (HAL_GetTick() - time_key_press) > 100) {
+            flag_key_press = 1;
         }
     }
 
