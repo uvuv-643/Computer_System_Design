@@ -1,7 +1,0 @@
-#include "read_driver.h"
-
-int read_button() {
-
-    return pin_info = (GPIOC->IDR & GPIO_Pin) == (uint32_t)GPIO_PIN_RESET;
-
-}
