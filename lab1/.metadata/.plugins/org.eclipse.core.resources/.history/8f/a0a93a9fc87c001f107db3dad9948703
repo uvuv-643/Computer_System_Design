@@ -1,0 +1,31 @@
+#include "write_driver.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void write_color(const enum LightState color) {
+    switch (color) {
+        case RED:
+        case RED_SHORT:
+        	GPIOD->BSRR = GPIO_PIN_15;
+            break;
+        case GREEN:
+        case GREEN_SHORT:
+        	GPIOD->BSRR = GPIO_PIN_13;
+            break;
+        case YELLOW:
+        case YELLOW_SHORT:
+        	GPIOD->BSRR = GPIO_PIN_14;
+            break;
+        case GREEN_FLUSHING:
+        case GREEN_FLUSHING_SHORT:
+            if ((HAL_GetTick() / 300) % 2 == 0) {
+            	GPIOD->BSRR = GPIO_PIN_13;
+            } else {
+            	GPIOD->BSRR = (uint32_t)GPIO_PIN_13 << 16U;
+            }
+            break;
+    }
+
+}

@@ -1,0 +1,9 @@
+#include "read_driver.h"
+
+int read_button() {
+
+    GPIO_PinState pin_info = (GPIOx->IDR & GPIO_Pin) == (uint32_t)GPIO_PIN_RESET;
+
+
+    return pin_info;
+}

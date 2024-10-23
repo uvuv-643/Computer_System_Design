@@ -1,0 +1,2 @@
+../Core/Src/drivers/write_driver.c:6:6:HAL_GPIO_WritePin_Impl	16	static
+../Core/Src/drivers/write_driver.c:22:6:write_color	16	static
