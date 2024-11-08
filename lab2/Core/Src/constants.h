@@ -1,0 +1,9 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#define GREEN_TIME 7000
+#define RED_TIME (GREEN_TIME * 4)
+#define YELLOW_TIME 3000
+#define GREEN_FLUSHING_TIME 3000
+
+#endif //CONSTANTS_H

@@ -1,0 +1,13 @@
+../Core/Src/main.c:89:6:switch_to_button_with_timer_flush	16	static
+../Core/Src/main.c:94:6:switch_to_button	16	static
+../Core/Src/main.c:107:6:HAL_UART_TxCpltCallback	1032	static
+../Core/Src/main.c:124:6:HAL_UART_RxCpltCallback	16	static
+../Core/Src/main.c:165:6:print	24	static
+../Core/Src/main.c:176:6:read	16	static
+../Core/Src/main.c:200:6:debug_command_info	16	static
+../Core/Src/main.c:206:6:execute_command	48	static
+../Core/Src/main.c:262:5:get_time_of_color	16	static
+../Core/Src/main.c:281:5:ready_to_switch	16	static
+../Core/Src/main.c:293:5:main	72	static
+../Core/Src/main.c:405:6:SystemClock_Config	88	static
+../Core/Src/main.c:450:6:Error_Handler	4	static,ignoring_inline_asm

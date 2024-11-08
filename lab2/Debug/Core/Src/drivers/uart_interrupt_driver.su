@@ -1,0 +1,3 @@
+../Core/Src/drivers/uart_interrupt_driver.c:16:6:transmit_uart_interrupt	32	static
+../Core/Src/drivers/uart_interrupt_driver.c:27:6:receive_uart_interrupt	8	static
+../Core/Src/drivers/uart_interrupt_driver.c:31:6:receive_uart_interrupt_cb	16	static
