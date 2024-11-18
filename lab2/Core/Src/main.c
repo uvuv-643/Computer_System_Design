@@ -12,6 +12,7 @@
 #include "states.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 /**
   ******************************************************************************
@@ -69,6 +70,7 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+static uint8_t received_buffer_empty[2] = "\0\0";
 
 
 enum LightState state = GREEN;
@@ -123,22 +125,6 @@ size_t command_tail_index = 0;
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	receive_uart_interrupt_cb(&read_buffer, &irq_state);
-	if (strcmp((char*)read_buffer.content, "\n\r") == 0) {
-		last_entered_command[command_tail_index] = '\0';
-		strcpy(str_buffer, last_entered_command);
-		execute_command(str_buffer);
-		last_entered_command[0] = '\0';
-		command_tail_index = 0;
-	} else {
-//		char bbb[10];
-//		sprintf(bbb, "%d", read_buffer.content[0]);
-//		print(bbb);
-		if (read_buffer.content[0] == 127) {
-			command_tail_index--;
-		} else {
-			last_entered_command[command_tail_index++] = read_buffer.content[0];
-		}
-	}
 }
 
 
@@ -153,13 +139,11 @@ uint8_t button_mode = 1;
 /*
  * set timeout X – установить тайм-аут (X – длина периода в секундах);
  */
-
 uint32_t timeout = RED_TIME / 1000;
 
 /*
  * set interrupts on или set interrupts off – включить или выключить прерывания.
  */
-
 uint8_t interrupts_mode = 1;
 
 void print(char* content) {
@@ -171,29 +155,12 @@ void print(char* content) {
 	}
 }
 
-
-
-void read() {
+uint8_t read() {
 	if (interrupts_mode) {
 		receive_uart_interrupt();
+		return 1;
 	} else {
-		uint8_t received = receive_uart_blocking(&read_buffer);
-		if (received) {
-			if (strcmp((char*)read_buffer.content, "\n\r") == 0) {
-				last_entered_command[command_tail_index] = '\0';
-				strcpy(str_buffer, last_entered_command);
-				execute_command(str_buffer);
-				last_entered_command[0] = '\0';
-				command_tail_index = 0;
-			} else {
-				if (read_buffer.content[0] == 127) {
-					command_tail_index--;
-				} else {
-					last_entered_command[command_tail_index++] = read_buffer.content[0];
-				}
-
-			}
-		}
+		return receive_uart_blocking(&read_buffer);
 	}
 }
 
@@ -216,7 +183,7 @@ void execute_command(char* command) {
 		print(buffer);
 		print("\n");
 		print("Timeout: ");
-		sprintf(buffer, "%d", timeout);
+		sprintf(buffer, "%d", (int)timeout);
 		print(buffer);
 		print("\n");
 		print("Interrupt / Polling: ");
@@ -282,8 +249,6 @@ int ready_to_switch() {
     return (HAL_GetTick() - button_tick) > get_time_of_color(state);
 }
 
-
-
 /* USER CODE END 0 */
 
 /**
@@ -337,15 +302,11 @@ int main(void)
 	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  char h[] = "h";
-  char e[] = "e";
-  char l[] = "ll";
-  char o[] = "o";
-  char nl[] = "\n";
 
   while (1)
   {
@@ -353,11 +314,30 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	//HAL_UART_Transmit( &huart6, (uint8_t *) s, sizeof( s ), 10 );
-	//HAL_Delay( 1000 );
+	__disable_irq();
+	uint8_t received = read();
+	if (received) {
+		if (read_buffer.content[0] != '\0') {
+			if (strcmp((char*)read_buffer.content, "\n\r") == 0) {
+				last_entered_command[command_tail_index] = '\0';
+				strcpy(str_buffer, last_entered_command);
+				execute_command(str_buffer);
+				last_entered_command[0] = '\0';
+				command_tail_index = 0;
+			} else {
+				if (read_buffer.content[0] == 127) {
+					if (command_tail_index > 0) {
+						command_tail_index--;
+					}
+				} else {
+					last_entered_command[command_tail_index++] = read_buffer.content[0];
+				}
+			}
+			read_buffer.content = received_buffer_empty;
+		}
+	}
 
-	read();
-
+	__enable_irq();
 
 	int is_button_pressed = read_button() && button_mode == 1;
 

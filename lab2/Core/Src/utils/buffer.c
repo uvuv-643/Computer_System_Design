@@ -8,7 +8,7 @@
 #ifndef SRC_UTILS_BUFFER_C_
 #define SRC_UTILS_BUFFER_C_
 
-#define QUEUE_SIZE 1000
+#define QUEUE_SIZE 100
 #include "buffer.h"
 
 static uint8_t queue[QUEUE_SIZE];
