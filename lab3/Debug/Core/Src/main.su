@@ -1,0 +1,16 @@
+../Core/Src/main.c:77:7:calculate_note_freq	32	static
+../Core/Src/main.c:94:6:HAL_UART_TxCpltCallback	1032	static
+../Core/Src/main.c:109:6:HAL_UART_RxCpltCallback	16	static
+../Core/Src/main.c:121:6:print	24	static
+../Core/Src/main.c:130:9:read	8	static
+../Core/Src/main.c:146:6:play_note	112	static
+../Core/Src/main.c:160:6:change_note	16	static
+../Core/Src/main.c:164:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:183:6:increase_octave	112	static
+../Core/Src/main.c:195:6:decrease_octave	112	static
+../Core/Src/main.c:207:6:increase_playtime	112	static
+../Core/Src/main.c:219:6:decrease_playtime	112	static
+../Core/Src/main.c:231:6:play_notes	4	static
+../Core/Src/main.c:245:5:main	56	static,ignoring_inline_asm
+../Core/Src/main.c:345:6:SystemClock_Config	88	static
+../Core/Src/main.c:394:6:Error_Handler	4	static,ignoring_inline_asm
