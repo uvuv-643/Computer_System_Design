@@ -1,0 +1,2 @@
+../Core/Src/drivers/uart_blocking_driver.c:16:6:transmit_uart_blocking	16	static
+../Core/Src/drivers/uart_blocking_driver.c:20:9:receive_uart_blocking	16	static

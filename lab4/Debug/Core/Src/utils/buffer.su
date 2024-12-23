@@ -1,0 +1,5 @@
+../Core/Src/utils/buffer.c:18:6:insert_in_queue	16	static
+../Core/Src/utils/buffer.c:25:9:take_element_from_queue	16	static
+../Core/Src/utils/buffer.c:32:9:is_queue_empty	4	static
+../Core/Src/utils/buffer.c:36:9:get_queue_size	4	static
+../Core/Src/utils/buffer.c:40:9:get_read_buffer	24	static
